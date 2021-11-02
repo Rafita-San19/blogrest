@@ -18,9 +18,12 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/login/{user}/{pass}', 'AuthController@login');
+//$router->group(['middleware'=>['cors']], function() use($router){
+    $router->get('/login/{user}/{pass}', 'AuthController@login');
+    
+//});
 
-$router->group(['middleware'=>['auth','cors']], function() use($router){
+$router->group(['middleware'=>['auth']], function() use($router){
     $router->get('/usuario', 'UserController@index');
     $router->get('/usuario/{user}', 'UserController@get');
     $router->post('/usuario', 'UserController@create');
@@ -40,3 +43,8 @@ $router->group(['middleware'=>['auth','cors']], function() use($router){
     $router->delete('/post/{id}', 'PostController@destroy');
 }
 );
+
+// $router->get('/test', ['middleware' => ['auth'], function (Request $request) use ($router) {
+//     $user = $request->user();
+//     return $user->user;
+// }]);
